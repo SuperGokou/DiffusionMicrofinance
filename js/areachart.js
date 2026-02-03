@@ -21,11 +21,11 @@ class AreaChart {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 20, right: 10, bottom: 20, left: 40};
+        vis.margin = {top: 20, right: 20, bottom: 30, left: 50};
 
-        // TODO: #9 - Change hardcoded width to reference the width of the parent element
-        vis.width = 400 - vis.margin.left - vis.margin.right;
-        vis.height = 300 - vis.margin.top - vis.margin.bottom;
+        // Fixed width for centered display
+        vis.width = 600;
+        vis.height = 180;
 
 
         // SVG drawing area
@@ -135,11 +135,27 @@ class AreaChart {
             });
 
 
+        // Create gradient for area chart
+        let gradient = vis.svg.append("defs")
+            .append("linearGradient")
+            .attr("id", "area-gradient")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "0%").attr("y2", "100%");
+
+        gradient.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", "#3498db")
+            .attr("stop-opacity", 0.8);
+
+        gradient.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", "#3498db")
+            .attr("stop-opacity", 0.2);
+
         // Call the area function and update the path
-        // D3 uses each data point and passes it to the area function. The area function translates the data into positions on the path in the SVG.
         vis.timePath
             .datum(vis.displayData)
-            .attr("fill", "#4682b4")
+            .attr("fill", "url(#area-gradient)")
             .attr("d", vis.area);
 
         // Update axes

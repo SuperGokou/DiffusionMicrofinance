@@ -27,9 +27,13 @@ class BarChart {
 		// console.log(vis.parentElement);
 		// console.log(vis.displayData);
 
-		vis.margin = { top: 10, right: 80, bottom: 10, left: 80 };
-		vis.width = 800 - vis.margin.left - vis.margin.right;
-		vis.height = 150 - vis.margin.top - vis.margin.bottom;
+		vis.margin = { top: 10, right: 45, bottom: 10, left: 70 };
+
+		// Get width from parent element for responsive sizing
+		let parentElement = document.getElementById(vis.parentElement);
+		let parentWidth = parentElement.getBoundingClientRect().width;
+		vis.width = Math.min((parentWidth || 350) - vis.margin.left - vis.margin.right, 350);
+		vis.height = 130;
 
 		// vis.svg = d3.select(vis.parentElement).append("svg")
 		vis.svg = d3.select('#' + vis.parentElement).append("svg")
@@ -43,7 +47,7 @@ class BarChart {
 			.padding(0.1);
 
 		vis.x = d3.scaleLinear()
-			.rangeRound([0, vis.width - 80]);
+			.rangeRound([0, vis.width]);
 
 		vis.yAxis = d3.axisLeft()
 			.scale(vis.y);
@@ -99,17 +103,20 @@ class BarChart {
 		bars.transition()
 			.duration(800)
 			.attr("y", d => vis.y(d.key))
-			.attr("width", d => vis.x(d.value));
+			.attr("width", d => vis.x(d.value))
+			.attr("fill", "#3498db");
 
 		bars.enter().append("rect")
 			.attr("class", "bar")
 			.attr("y", d => vis.y(d.key))
 			.attr("height", 26)
 			.attr("x", 5)
+			.attr("rx", 3)
+			.attr("ry", 3)
 			.transition()
 			.duration(800)
 			.attr("width", d => vis.x(d.value))
-			.attr("fill", "#4682b4");
+			.attr("fill", "#3498db");
 
 		labels.transition()
 			.duration(800)
