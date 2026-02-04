@@ -2,7 +2,7 @@
 
 An interactive data visualization dashboard exploring household-level survey data on microfinance adoption patterns. Built with D3.js for CS171 - Data Visualization.
 
-**[Live Demo](https://supergokou.github.io/THE-DIFFUSION-OF-MICROFINANCE/)**
+**[Live Demo](https://supergokou.github.io/DiffusionMicrofinance/)**
 
 ![Dashboard Screenshot](screenshot.png)
 
